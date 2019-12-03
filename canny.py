@@ -108,6 +108,24 @@ plt.figure()
 plt.imshow(Z / (4 * np.sqrt(2)), cmap='gray')
 plt.title('Gradient with non-maxima suppression applied')
 
+# Double threshold
+lowThresholdRatio = 0.05
+highThresholdRatio = 0.09
+highThreshold = Z.max() * highThresholdRatio
+lowThreshold = highThreshold * lowThresholdRatio
+T = np.zeros((Y, X))
+weak = 25
+strong = 255
+strongY, strongX = np.where(Z >= highThreshold)
+zerosY, zerosX = np.where(Z < lowThreshold)
+weakY, weakX = np.where((Z < highThreshold) & (Z > lowThreshold))
+T[strongY, strongX] = strong
+T[weakY, weakX] = weak
+# plot image with double threshold applied
+plt.figure()
+plt.imshow(T / (4 * np.sqrt(2)), cmap='gray')
+plt.title('Double thresholding')
+
 
 # show images
 plt.show()
