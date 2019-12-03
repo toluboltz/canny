@@ -126,6 +126,22 @@ plt.figure()
 plt.imshow(T / (4 * np.sqrt(2)), cmap='gray')
 plt.title('Double thresholding')
 
+# Edge tracking by Hysteresis
+for y in range(1, (Y-1)):
+	for x in range(1, (X-1)):
+		if(T[y, x] == weak):
+			if((T[y-1, x-1] == strong) or (T[y-1, x] == strong) or
+				(T[y-1, x+1] == strong) or (T[y, x+1] == strong) or
+				(T[y+1, x+1] == strong) or (T[y+1, x] == strong) or
+				(T[y+1, x-1] == strong) or (T[y, x-1] == strong)):
+				T[y, x] = strong
+			else:
+				T[y, x] = 0
+# plot image with edge tracking by hysteresis applied
+plt.figure()
+plt.imshow(T / (4 * np.sqrt(2)), cmap='gray')
+plt.title('Edge tracking by hysteresis')
+
 
 # show images
 plt.show()
